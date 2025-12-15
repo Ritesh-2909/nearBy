@@ -1,0 +1,29 @@
+{
+  "name": "nearby",
+  "version": "1.0.0",
+  "description": "Nearby Vendors - React Native app with Node.js backend",
+  "private": true,
+  "scripts": {
+    "check:frontend": "cd frontend && npm run check",
+    "check:backend": "cd backend && npm run check",
+    "check": "npm run check:backend && npm run check:frontend",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:fix:frontend": "cd frontend && npm run lint:fix",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "build": "npm run check && echo '✓ All checks passed! Ready to build.'",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "start:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && npm start"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "nodejs",
+    "mongodb",
+    "nearby-vendors"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+

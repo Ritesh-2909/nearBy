@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "create-admin": "node scripts/createAdmin.js"
+    "create-admin": "node scripts/createAdmin.js",
+    "init-db": "node scripts/initDatabase.js",
+    "check": "node scripts/check.js",
+    "prebuild": "npm run check",
+    "build": "npm run prebuild && echo '✓ Backend checks passed! Ready to deploy.'"
   },
   "keywords": [],
   "author": "",
