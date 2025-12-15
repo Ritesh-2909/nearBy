@@ -9,7 +9,7 @@ interface SubmitButtonProps {
 export function SubmitButton({ onPress, loading }: SubmitButtonProps) {
   return (
     <TouchableOpacity
-      tw={`bg-primary p-4 m-4 rounded-lg items-center ${loading ? 'opacity-60' : ''}`}
+      className={`bg-blue-500 p-4 m-4 rounded-lg items-center ${loading ? 'opacity-60' : ''}`}
       onPress={onPress}
       disabled={loading}
     >
@@ -21,3 +21,4 @@ export function SubmitButton({ onPress, loading }: SubmitButtonProps) {
     </TouchableOpacity>
   );
 }
+

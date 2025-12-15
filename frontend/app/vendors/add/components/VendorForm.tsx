@@ -57,13 +57,13 @@ export function VendorForm({
             {CATEGORIES.map((cat) => (
               <TouchableOpacity
                 key={cat}
-                tw={`p-3 border-b border-gray-100 ${category === cat ? 'bg-primary' : ''}`}
+                className={`p-3 border-b border-gray-100 ${category === cat ? 'bg-blue-500' : ''}`}
                 onPress={() => {
                   onCategoryChange(cat);
                   setShowCategoryPicker(false);
                 }}
               >
-                <Text tw={`text-base ${category === cat ? 'text-white' : 'text-gray-800'}`}>
+                <Text className={`text-base ${category === cat ? 'text-white' : 'text-gray-800'}`}>
                   {cat}
                 </Text>
               </TouchableOpacity>
@@ -87,3 +87,4 @@ export function VendorForm({
     </View>
   );
 }
+

@@ -19,7 +19,7 @@ export default function OnboardingPage() {
     const result = await requestLocationPermission();
     
     if (result.granted) {
-      router.replace('/home/page');
+      router.replace('/home');
     } else {
       Alert.alert('Permission Required', result.message || 'Location permission is required');
     }
@@ -28,7 +28,7 @@ export default function OnboardingPage() {
   };
 
   const handleLogin = () => {
-    router.push('/auth/login/page');
+    router.push('/auth/login');
   };
 
   return (

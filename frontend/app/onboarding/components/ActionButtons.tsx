@@ -11,7 +11,7 @@ export function ActionButtons({ onGetStarted, onLogin, loading }: ActionButtonsP
   return (
     <View className="pb-8 px-6">
       <TouchableOpacity
-        tw={`bg-primary p-4 rounded-xl items-center mb-4 shadow-lg ${loading ? 'opacity-60' : ''}`}
+        className={`bg-blue-500 p-4 rounded-xl items-center mb-4 shadow-lg ${loading ? 'opacity-60' : ''}`}
         onPress={onGetStarted}
         disabled={loading}
         style={{ elevation: 4 }}
@@ -24,11 +24,11 @@ export function ActionButtons({ onGetStarted, onLogin, loading }: ActionButtonsP
       </TouchableOpacity>
 
       <TouchableOpacity
-        className="bg-white border-2 border-primary p-4 rounded-xl items-center shadow-sm"
+        className="bg-white border-2 border-blue-500 p-4 rounded-xl items-center shadow-sm"
         onPress={onLogin}
         disabled={loading}
       >
-        <Text className="text-primary text-lg font-semibold">Already have an account? Login</Text>
+        <Text className="text-blue-500 text-lg font-semibold">Already have an account? Login</Text>
       </TouchableOpacity>
     </View>
   );

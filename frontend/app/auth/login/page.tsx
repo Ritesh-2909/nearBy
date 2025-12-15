@@ -25,7 +25,7 @@ export default function LoginPage() {
     if (result.success && result.data) {
       await storage.setToken(result.data.token);
       await storage.setUser(result.data.user);
-      router.replace('/home/page');
+      router.replace('/home');
     } else {
       Alert.alert('Login Failed', result.error || 'Please try again');
     }
@@ -51,7 +51,7 @@ export default function LoginPage() {
         <AuthLink
           text="Don't have an account?"
           linkText="Register"
-          onPress={() => router.push('/auth/register/page')}
+          onPress={() => router.push('/auth/register')}
         />
       </View>
     </KeyboardAvoidingView>

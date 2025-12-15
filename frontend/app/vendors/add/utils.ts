@@ -17,8 +17,28 @@ export function validateVendorForm(data: VendorFormData): { isValid: boolean; er
     return { isValid: false, error: 'Please select a category' };
   }
 
-  if (!data.location || !data.location.latitude || !data.location.longitude) {
+  // Fix: Check for valid coordinates
+  // Only reject (0,0) as uninitialized, not individual 0 values
+  // This allows valid locations on equator (lat=0) or prime meridian (lng=0)
+  if (!data.location) {
     return { isValid: false, error: 'Please set the vendor location' };
+  }
+
+  const { latitude, longitude } = data.location;
+
+  // Check if both are exactly 0 (uninitialized placeholder)
+  if (latitude === 0 && longitude === 0) {
+    return { isValid: false, error: 'Please set the vendor location' };
+  }
+
+  // Validate coordinate ranges
+  if (
+    latitude < -90 ||
+    latitude > 90 ||
+    longitude < -180 ||
+    longitude > 180
+  ) {
+    return { isValid: false, error: 'Invalid location coordinates' };
   }
 
   return { isValid: true };
@@ -75,4 +95,3 @@ export function processTags(tagsString: string): string[] {
     .map(tag => tag.trim())
     .filter(tag => tag.length > 0);
 }
-

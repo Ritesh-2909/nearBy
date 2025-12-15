@@ -26,7 +26,7 @@ export default function RegisterPage() {
     if (result.success && result.data) {
       await storage.setToken(result.data.token);
       await storage.setUser(result.data.user);
-      router.replace('/home/page');
+      router.replace('/home');
     } else {
       Alert.alert('Registration Failed', result.error || 'Please try again');
     }
@@ -54,7 +54,7 @@ export default function RegisterPage() {
         <AuthLink
           text="Already have an account?"
           linkText="Login"
-          onPress={() => router.push('/auth/login/page')}
+          onPress={() => router.push('/auth/login')}
         />
       </View>
     </KeyboardAvoidingView>

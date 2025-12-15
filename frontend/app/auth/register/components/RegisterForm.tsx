@@ -64,7 +64,7 @@ export function RegisterForm({
       </View>
 
       <TouchableOpacity
-        tw={`bg-primary p-4 rounded-xl items-center shadow-lg ${loading ? 'opacity-60' : ''}`}
+        className={`bg-blue-500 p-4 rounded-xl items-center shadow-lg ${loading ? 'opacity-60' : ''}`}
         onPress={onSubmit}
         disabled={loading}
         style={{ elevation: 4 }}
@@ -78,3 +78,4 @@ export function RegisterForm({
     </View>
   );
 }
+

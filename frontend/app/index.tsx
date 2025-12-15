@@ -8,7 +8,6 @@ export default function Index() {
 
   // Redirect to onboarding for now
   // TODO: Check auth state and redirect accordingly
-  // Using the route path that matches the file structure
-  return <Redirect href="/onboarding/page" />;
+  return <Redirect href="/onboarding" />;
 }
 
