@@ -21,6 +21,7 @@ export interface Vendor {
   status?: 'approved' | 'pending' | 'rejected';
   viewCount?: number;
   clickCount?: number;
+  createdAt?: string; // ISO date string
 }
 
 export interface VendorListResponse {

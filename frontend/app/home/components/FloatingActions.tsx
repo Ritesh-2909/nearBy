@@ -10,7 +10,7 @@ export function FloatingActions({ router }: FloatingActionsProps) {
   return (
     <View className="absolute right-5 bottom-6">
       <TouchableOpacity
-        className="w-14 h-14 rounded-full bg-blue-500 justify-center items-center mb-3"
+        className="w-14 h-14 rounded-full bg-orange-500 justify-center items-center mb-3"
         onPress={() => router.push('/vendors/add')}
         style={{ elevation: 8 }}
       >

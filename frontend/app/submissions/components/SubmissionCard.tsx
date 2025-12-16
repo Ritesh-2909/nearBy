@@ -5,21 +5,44 @@ import { getStatusColor, formatSubmissionDate } from '../utils';
 
 interface SubmissionCardProps {
   submission: Submission;
+  selected?: boolean;
+  onPress?: () => void;
 }
 
-export function SubmissionCard({ submission }: SubmissionCardProps) {
+export function SubmissionCard({ submission, selected = false, onPress }: SubmissionCardProps) {
+  const formatTime = (dateString: string) => {
+    const date = new Date(dateString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  };
+
   return (
-    <TouchableOpacity className="bg-white p-4 rounded-lg mb-2.5 shadow-sm">
-      <View className="flex-row justify-between items-start mb-2">
-        <Text className="flex-1 text-lg font-semibold text-gray-800 mr-2.5">{submission.name}</Text>
-        <View className={`px-2 py-1 rounded`} style={{ backgroundColor: getStatusColor(submission.status) }}>
-          <Text className="text-white text-xs font-semibold">{submission.status.toUpperCase()}</Text>
-        </View>
+    <TouchableOpacity
+      className={`bg-white rounded-lg mb-3 shadow-sm border-2 ${
+        selected ? 'border-orange-500' : 'border-gray-200'
+      }`}
+      style={{ width: '48%', marginBottom: 12 }}
+      onPress={onPress}
+    >
+      {/* Map Placeholder */}
+      <View className="h-24 bg-gray-100 rounded-t-lg items-center justify-center">
+        <Text className="text-2xl">📍</Text>
       </View>
-      <Text className="text-sm text-blue-500 mb-1">{submission.category}</Text>
-      <Text className="text-xs text-gray-400 mt-2">
-        Submitted: {formatSubmissionDate(submission.createdAt)}
-      </Text>
+      
+      {/* Status and Time */}
+      <View className="p-2">
+        <Text className="text-xs font-semibold text-gray-900 mb-1">{submission.name}</Text>
+        <Text className="text-xs text-gray-600">
+          {submission.status === 'pending' ? 'Submit for review' : submission.status} {formatTime(submission.createdAt)}
+        </Text>
+        {selected && (
+          <View className="absolute top-2 right-2 w-5 h-5 bg-orange-500 rounded-full items-center justify-center">
+            <Text className="text-white text-xs">✓</Text>
+          </View>
+        )}
+      </View>
     </TouchableOpacity>
   );
 }

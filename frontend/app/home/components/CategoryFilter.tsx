@@ -2,14 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 const CATEGORIES = [
-  'Food & Beverages',
-  'Groceries',
-  'Electronics',
-  'Clothing',
+  'Grocery',
   'Hardware',
-  'Stationery',
-  'Pharmacy',
-  'Other',
+  'Food',
+  'Service',
 ];
 
 interface CategoryFilterProps {
@@ -25,23 +21,20 @@ export function CategoryFilter({ selectedCategory, onCategorySelect }: CategoryF
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16 }}
       >
-        <TouchableOpacity
-          className={`px-5 py-2.5 rounded-full mx-1.5 ${selectedCategory === null ? 'bg-blue-500' : 'bg-gray-100'}`}
-          onPress={() => onCategorySelect(null)}
-          style={selectedCategory === null ? { elevation: 2 } : {}}
-        >
-          <Text className={`text-sm font-semibold ${selectedCategory === null ? 'text-white' : 'text-gray-700'}`}>
-            All
-          </Text>
-        </TouchableOpacity>
         {CATEGORIES.map((category) => (
           <TouchableOpacity
             key={category}
-            className={`px-5 py-2.5 rounded-full mx-1.5 ${selectedCategory === category ? 'bg-blue-500' : 'bg-gray-100'}`}
-            onPress={() => onCategorySelect(category)}
+            className={`px-5 py-2.5 rounded-full mx-1.5 ${
+              selectedCategory === category ? 'bg-orange-500' : 'bg-transparent'
+            }`}
+            onPress={() => onCategorySelect(selectedCategory === category ? null : category)}
             style={selectedCategory === category ? { elevation: 2 } : {}}
           >
-            <Text className={`text-sm font-semibold ${selectedCategory === category ? 'text-white' : 'text-gray-700'}`}>
+            <Text
+              className={`text-sm font-semibold ${
+                selectedCategory === category ? 'text-white' : 'text-gray-700'
+              }`}
+            >
               {category}
             </Text>
           </TouchableOpacity>
@@ -50,3 +43,4 @@ export function CategoryFilter({ selectedCategory, onCategorySelect }: CategoryF
     </View>
   );
 }
+

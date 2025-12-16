@@ -8,17 +8,22 @@ interface SubmitButtonProps {
 
 export function SubmitButton({ onPress, loading }: SubmitButtonProps) {
   return (
-    <TouchableOpacity
-      className={`bg-blue-500 p-4 m-4 rounded-lg items-center ${loading ? 'opacity-60' : ''}`}
-      onPress={onPress}
-      disabled={loading}
-    >
-      {loading ? (
-        <ActivityIndicator color="#fff" />
-      ) : (
-        <Text className="text-white text-lg font-semibold">Submit Vendor</Text>
-      )}
-    </TouchableOpacity>
+    <View className="px-4 pb-4">
+      <TouchableOpacity
+        className={`bg-black p-4 rounded-lg items-center ${loading ? 'opacity-60' : ''}`}
+        onPress={onPress}
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text className="text-white text-lg font-semibold">Submit for review</Text>
+        )}
+      </TouchableOpacity>
+      <Text className="text-xs text-gray-500 text-center mt-2">
+        Will be visible after approval
+      </Text>
+    </View>
   );
 }
 

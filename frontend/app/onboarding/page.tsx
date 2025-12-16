@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { OnboardingHeader } from './components/OnboardingHeader';
 import { FeatureList } from './components/FeatureList';
@@ -32,16 +32,24 @@ export default function OnboardingPage() {
   };
 
   return (
-    <View className="flex-1 bg-blue-50">
-      <View className="flex-1 justify-center">
-        <OnboardingHeader />
-        <FeatureList />
+    <View className="flex-1 bg-white">
+      <OnboardingHeader />
+      
+      {/* Map Placeholder */}
+      <View className="flex-1 justify-center items-center px-5">
+        <View className="w-full h-64 bg-gray-100 rounded-lg items-center justify-center border border-gray-200 mb-6">
+          <Text className="text-6xl mb-4">🗺️</Text>
+          <Text className="text-sm text-gray-500">Map with vendor icons</Text>
+        </View>
       </View>
-      <ActionButtons 
-        onGetStarted={handleGetStarted}
-        onLogin={handleLogin}
-        loading={loading}
-      />
+      
+      <View className="px-5 pb-8">
+        <ActionButtons 
+          onGetStarted={handleGetStarted}
+          onLogin={handleLogin}
+          loading={loading}
+        />
+      </View>
     </View>
   );
 }

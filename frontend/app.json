@@ -13,8 +13,20 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "bundleIdentifier": "com.nearby.vendors"
+      "bundleIdentifier": "com.nearby.vendors",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app needs location access to find nearby vendors.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app needs location access to find nearby vendors."
+      }
     },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location to find nearby vendors."
+        }
+      ]
+    ],
     "android": {
       "package": "com.nearby.vendors",
       "permissions": [

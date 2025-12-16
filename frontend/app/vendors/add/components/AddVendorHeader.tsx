@@ -1,11 +1,19 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 
 export function AddVendorHeader() {
+  const router = useRouter();
+  
   return (
-    <View className="p-5 border-b border-gray-200">
-      <Text className="text-2xl font-bold text-gray-800 mb-1">Add Vendor</Text>
-      <Text className="text-sm text-gray-600">This will go live after review</Text>
+    <View className="bg-white px-5 pt-12 pb-4 border-b border-gray-200">
+      <View className="flex-row items-center mb-2">
+        <TouchableOpacity onPress={() => router.back()} className="mr-4">
+          <Text className="text-2xl">←</Text>
+        </TouchableOpacity>
+        <Text className="text-xl font-bold text-gray-900">Add vendor</Text>
+      </View>
     </View>
   );
 }
+
