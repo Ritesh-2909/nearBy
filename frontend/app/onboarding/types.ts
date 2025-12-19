@@ -7,3 +7,5 @@ export interface LocationPermissionStatus {
   message?: string;
 }
 
+
+

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import MapView from 'react-native-maps';
-import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 const CATEGORIES = [
   'Grocery',
@@ -48,7 +47,6 @@ export function VendorForm({
       {location ? (
         <View className="mb-4 h-48 rounded-lg overflow-hidden border border-gray-200">
           <MapView
-            provider={PROVIDER_GOOGLE}
             style={{ flex: 1 }}
             initialRegion={{
               latitude: location.latitude,

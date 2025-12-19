@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
-import MapView from 'react-native-maps';
-import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { View, Text, Alert } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useRouter } from 'expo-router';
 import { Vendor } from '../types';
@@ -14,7 +13,6 @@ interface MapViewProps {
 
 export function MapViewComponent({ vendors, onVendorPress, onLongPress }: MapViewProps) {
   const router = useRouter();
-  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [region, setRegion] = useState({
     latitude: 28.6139, // Default to Delhi
     longitude: 77.2090,
@@ -36,7 +34,6 @@ export function MapViewComponent({ vendors, onVendorPress, onLongPress }: MapVie
       const location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
       
-      setUserLocation({ latitude, longitude });
       setRegion({
         latitude,
         longitude,
@@ -86,7 +83,6 @@ export function MapViewComponent({ vendors, onVendorPress, onLongPress }: MapVie
   return (
     <View className="flex-1">
       <MapView
-        provider={PROVIDER_GOOGLE}
         style={{ flex: 1 }}
         region={region}
         onRegionChangeComplete={setRegion}

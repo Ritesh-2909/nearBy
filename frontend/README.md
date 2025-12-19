@@ -120,3 +120,5 @@ npx expo start --clear
 - Keep components focused and single-purpose
 - Add console logs for debugging (already implemented)
 
+
+

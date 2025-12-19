@@ -90,3 +90,5 @@ export function getCategoryColor(category: string): string {
   return colorMap[category] || colorMap['Other'];
 }
 
+
+

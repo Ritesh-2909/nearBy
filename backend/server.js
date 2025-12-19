@@ -29,7 +29,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/nearby', 
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5005;
 
 // Start server
 const server = app.listen(PORT, () => {
@@ -39,7 +39,7 @@ const server = app.listen(PORT, () => {
     console.error(`❌ Port ${PORT} is already in use.`);
     console.log(`💡 Try one of these solutions:`);
     console.log(`   1. Kill the process using port ${PORT}: lsof -ti:${PORT} | xargs kill -9`);
-    console.log(`   2. Use a different port: PORT=5001 npm start`);
+    console.log(`   2. Use a different port: PORT=5005 npm start`);
     process.exit(1);
   } else {
     console.error('❌ Server error:', err);

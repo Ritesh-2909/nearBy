@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 // Import global CSS for NativeWind - must be imported before components
 import '../global.css';
+import React from 'react';
+
+import { AuthProvider } from '../src/providers/auth-provider';
 
 export default function RootLayout() {
   useEffect(() => {
@@ -21,8 +24,6 @@ export default function RootLayout() {
     };
 
     const subscription = AppState.addEventListener('change', handleAppStateChange);
-    
-    // Log initial state
     console.log(`📱 [App] Initial app state: ${AppState.currentState}`);
 
     return () => {
@@ -31,7 +32,7 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <>
+    <AuthProvider>
       <StatusBar style="auto" />
       <Stack
         screenOptions={{
@@ -42,17 +43,7 @@ export default function RootLayout() {
         }}
       >
         {/* Expo Router automatically creates screens from file structure */}
-        {/* Routes:
-            - / (index.tsx) -> redirects to /onboarding
-            - /onboarding (onboarding/page.tsx)
-            - /home (home/page.tsx)
-            - /auth/login (auth/login/page.tsx)
-            - /auth/register (auth/register/page.tsx)
-            - /vendors/add (vendors/add/page.tsx)
-            - /vendors/[id] (vendors/[id]/page.tsx)
-            - /submissions (submissions/page.tsx)
-        */}
       </Stack>
-    </>
+    </AuthProvider>
   );
 }

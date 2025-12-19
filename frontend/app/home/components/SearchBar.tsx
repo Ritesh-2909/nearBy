@@ -13,7 +13,7 @@ export function SearchBar({ value, onChangeText }: SearchBarProps) {
         <Text className="text-lg mr-3">🔍</Text>
         <TextInput
           className="flex-1 text-base text-gray-900"
-          placeholder="Q Search for broom, tea, veggies..."
+          placeholder="Search for broom, tea, veggies..."
           placeholderTextColor="#9CA3AF"
           value={value}
           onChangeText={onChangeText}
@@ -30,4 +30,6 @@ export function SearchBar({ value, onChangeText }: SearchBarProps) {
     </View>
   );
 }
+
+
 

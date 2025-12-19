@@ -42,3 +42,5 @@ export type Category =
   | 'Pharmacy'
   | 'Other';
 
+
+

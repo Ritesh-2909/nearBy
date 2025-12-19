@@ -1,3 +1,4 @@
+import React from 'react';
 import { Redirect } from 'expo-router';
 import { useEffect } from 'react';
 

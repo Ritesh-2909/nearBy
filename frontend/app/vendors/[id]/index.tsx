@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Linking, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import MapView from 'react-native-maps';
-import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { vendorsAPI } from '../../../services/api';
 import { Vendor } from '../../home/types';
 
@@ -13,36 +12,23 @@ export default function VendorDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const loadVendor = async () => {
+      try {
+        const response = await vendorsAPI.getById(id as string);
+        setVendor(response.data.vendor);
+        
+        // Track view
+        await vendorsAPI.incrementClick(id as string);
+      } catch (error) {
+        console.error('Error loading vendor:', error);
+        Alert.alert('Error', 'Could not load vendor details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadVendor();
   }, [id]);
-
-  const loadVendor = async () => {
-    try {
-      // TODO: Replace with actual API call
-      // const response = await vendorsAPI.getVendor(id as string);
-      // setVendor(response.data);
-      
-      // Mock data for now
-      setVendor({
-        _id: id as string,
-        name: 'Sample Vendor',
-        category: 'Grocery',
-        description: 'Fresh vegetables and daily essentials',
-        address: '123 Main Street',
-        phone: '+1234567890',
-        location: {
-          type: 'Point',
-          coordinates: [77.2090, 28.6139],
-        },
-        status: 'approved',
-      });
-    } catch (error) {
-      console.error('Error loading vendor:', error);
-      Alert.alert('Error', 'Could not load vendor details');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleCall = () => {
     if (vendor?.phone) {
@@ -104,7 +90,6 @@ export default function VendorDetailPage() {
       {vendor.location && (
         <View className="h-64 my-4 mx-4 rounded-lg overflow-hidden border border-gray-200">
           <MapView
-            provider={PROVIDER_GOOGLE}
             style={{ flex: 1 }}
             initialRegion={{
               latitude: lat,

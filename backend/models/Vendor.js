@@ -95,3 +95,5 @@ vendorSchema.index({ name: 'text', description: 'text', tags: 'text' });
 
 module.exports = mongoose.model('Vendor', vendorSchema);
 
+
+

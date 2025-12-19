@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Submission } from '../types';
-import { getStatusColor, formatSubmissionDate } from '../utils';
+
 
 interface SubmissionCardProps {
   submission: Submission;

@@ -20,40 +20,41 @@ export default function AddVendorPage() {
 
   useEffect(() => {
     console.log('📱 [Page] Add Vendor page initialized');
-    initializeLocation();
-  }, []);
-
-  const initializeLocation = async () => {
-    // Check if location came from map long-press (from query params or route params)
-    const latParam = (params.lat as string) || (params as any).lat;
-    const lngParam = (params.lng as string) || (params as any).lng;
     
-    if (latParam && lngParam) {
-      setLocation({
-        latitude: parseFloat(latParam),
-        longitude: parseFloat(lngParam),
-      });
-      return;
-    }
-
-    // Otherwise get current location
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Permission Required', 'Location permission is needed to add a vendor');
+    const initializeLocation = async () => {
+      // Check if location came from map long-press (from query params or route params)
+      const latParam = (params.lat as string) || (params as any).lat;
+      const lngParam = (params.lng as string) || (params as any).lng;
+      
+      if (latParam && lngParam) {
+        setLocation({
+          latitude: parseFloat(latParam),
+          longitude: parseFloat(lngParam),
+        });
         return;
       }
 
-      const currentLocation = await Location.getCurrentPositionAsync({});
-      setLocation({
-        latitude: currentLocation.coords.latitude,
-        longitude: currentLocation.coords.longitude,
-      });
-    } catch (error) {
-      console.error('Error getting location:', error);
-      Alert.alert('Error', 'Could not get your location. Please try again.');
-    }
-  };
+      // Otherwise get current location
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          Alert.alert('Permission Required', 'Location permission is needed to add a vendor');
+          return;
+        }
+
+        const currentLocation = await Location.getCurrentPositionAsync({});
+        setLocation({
+          latitude: currentLocation.coords.latitude,
+          longitude: currentLocation.coords.longitude,
+        });
+      } catch (error) {
+        console.error('Error getting location:', error);
+        Alert.alert('Error', 'Could not get your location. Please try again.');
+      }
+    };
+
+    initializeLocation();
+  }, [params]);
 
   const handleSubmit = async () => {
     if (!location) {

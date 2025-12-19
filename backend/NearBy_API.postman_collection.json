@@ -1,0 +1,552 @@
+{
+	"info": {
+		"_postman_id": "nearby-api-collection",
+		"name": "NearBy Backend API",
+		"description": "Complete API collection for NearBy vendor management system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5005/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["health"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"token\", jsonData.token);",
+									"    console.log(\"Token saved:\", jsonData.token);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "me"]
+						}
+					}
+				},
+				{
+					"name": "Create Anonymous User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/anonymous",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "anonymous"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Vendors",
+			"item": [
+				{
+					"name": "Get Nearby Vendors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/vendors/nearby?lat=28.6139&lng=77.2090&radius=3000",
+							"host": ["{{baseUrl}}"],
+							"path": ["vendors", "nearby"],
+							"query": [
+								{
+									"key": "lat",
+									"value": "28.6139",
+									"description": "Latitude"
+								},
+								{
+									"key": "lng",
+									"value": "77.2090",
+									"description": "Longitude"
+								},
+								{
+									"key": "radius",
+									"value": "3000",
+									"description": "Radius in meters (default: 3000)"
+								},
+								{
+									"key": "category",
+									"value": "Grocery",
+									"disabled": true,
+									"description": "Filter by category"
+								},
+								{
+									"key": "search",
+									"value": "grocery",
+									"disabled": true,
+									"description": "Search term"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Vendor by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/vendors/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["vendors", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "VENDOR_ID",
+									"description": "Vendor ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Submit Vendor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Grocery Store\",\n    \"category\": \"Grocery\",\n    \"description\": \"Fresh vegetables and daily essentials\",\n    \"tags\": [\"fresh\", \"organic\", \"vegetables\"],\n    \"location\": {\n        \"lat\": 28.6139,\n        \"lng\": 77.2090\n    },\n    \"address\": \"123 Main Street, City\",\n    \"phone\": \"+91-1234567890\",\n    \"openingHours\": {\n        \"monday\": \"9:00-18:00\",\n        \"tuesday\": \"9:00-18:00\",\n        \"wednesday\": \"9:00-18:00\",\n        \"thursday\": \"9:00-18:00\",\n        \"friday\": \"9:00-18:00\",\n        \"saturday\": \"9:00-18:00\",\n        \"sunday\": \"closed\"\n    },\n    \"photo\": \"https://example.com/photo.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/vendors/user-submissions",
+							"host": ["{{baseUrl}}"],
+							"path": ["vendors", "user-submissions"]
+						}
+					}
+				},
+				{
+					"name": "Get My Submissions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/vendors/my-submissions",
+							"host": ["{{baseUrl}}"],
+							"path": ["vendors", "my-submissions"]
+						}
+					}
+				},
+				{
+					"name": "Get Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/vendors/categories/list",
+							"host": ["{{baseUrl}}"],
+							"path": ["vendors", "categories", "list"]
+						}
+					}
+				},
+				{
+					"name": "Increment Click Count",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/vendors/:id/click",
+							"host": ["{{baseUrl}}"],
+							"path": ["vendors", ":id", "click"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "VENDOR_ID",
+									"description": "Vendor ID"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get All Submissions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/submissions?status=pending",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "submissions"],
+							"query": [
+								{
+									"key": "status",
+									"value": "pending",
+									"description": "pending, approved, rejected, or all"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Approve Submission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/submissions/:id/approve",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "submissions", ":id", "approve"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "VENDOR_ID",
+									"description": "Vendor ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Reject Submission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reason\": \"Duplicate vendor or inappropriate content\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/submissions/:id/reject",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "submissions", ":id", "reject"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "VENDOR_ID",
+									"description": "Vendor ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Edit and Approve",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Vendor Name\",\n    \"category\": \"Grocery\",\n    \"description\": \"Updated description\",\n    \"tags\": [\"fresh\", \"organic\"],\n    \"address\": \"Updated address\",\n    \"phone\": \"+91-9876543210\",\n    \"openingHours\": {\n        \"monday\": \"8:00-20:00\"\n    },\n    \"photo\": \"https://example.com/new-photo.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/submissions/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "submissions", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "VENDOR_ID",
+									"description": "Vendor ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Vendor (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Admin Created Vendor\",\n    \"category\": \"Food\",\n    \"description\": \"Vendor created by admin\",\n    \"tags\": [\"restaurant\", \"dine-in\"],\n    \"location\": {\n        \"lat\": 28.6139,\n        \"lng\": 77.2090\n    },\n    \"address\": \"456 Admin Street\",\n    \"phone\": \"+91-1111111111\",\n    \"openingHours\": {\n        \"monday\": \"10:00-22:00\"\n    },\n    \"photo\": \"https://example.com/vendor.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/vendors",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "vendors"]
+						}
+					}
+				},
+				{
+					"name": "Get Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/analytics",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "analytics"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Test/Mock",
+			"item": [
+				{
+					"name": "Test Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["test", "health"]
+						}
+					}
+				},
+				{
+					"name": "Mock Vendors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test/mock-vendors",
+							"host": ["{{baseUrl}}"],
+							"path": ["test", "mock-vendors"]
+						}
+					}
+				},
+				{
+					"name": "Mock Nearby",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test/mock-nearby?lat=28.6139&lng=77.2090&radius=5000",
+							"host": ["{{baseUrl}}"],
+							"path": ["test", "mock-nearby"],
+							"query": [
+								{
+									"key": "lat",
+									"value": "28.6139"
+								},
+								{
+									"key": "lng",
+									"value": "77.2090"
+								},
+								{
+									"key": "radius",
+									"value": "5000"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Mock Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/test/mock-login",
+							"host": ["{{baseUrl}}"],
+							"path": ["test", "mock-login"]
+						}
+					}
+				},
+				{
+					"name": "Mock Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test/mock-categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["test", "mock-categories"]
+						}
+					}
+				},
+				{
+					"name": "Mock Analytics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test/mock-analytics",
+							"host": ["{{baseUrl}}"],
+							"path": ["test", "mock-analytics"]
+						}
+					}
+				},
+				{
+					"name": "Test Delay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test/delay?ms=2000",
+							"host": ["{{baseUrl}}"],
+							"path": ["test", "delay"],
+							"query": [
+								{
+									"key": "ms",
+									"value": "2000",
+									"description": "Delay in milliseconds"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
+
