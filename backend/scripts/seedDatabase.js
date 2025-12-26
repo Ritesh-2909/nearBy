@@ -3,9 +3,9 @@ const Vendor = require('../models/Vendor');
 const User = require('../models/User');
 require('dotenv').config();
 
-// Dummy vendors data for Delhi area
+// Dummy vendors data for Bangalore area
 const dummyVendors = [
-  // Connaught Place area
+  // MG Road area
   {
     name: "Fresh Fruits Corner",
     category: "Grocery",
@@ -13,9 +13,9 @@ const dummyVendors = [
     tags: ["fruits", "vegetables", "organic"],
     location: {
       type: "Point",
-      coordinates: [77.2167, 28.6315] // CP
+      coordinates: [77.5946, 12.9716] // MG Road
     },
-    address: "Connaught Place, New Delhi",
+    address: "MG Road, Bangalore",
     phone: "+91-9876543210",
     source: "admin",
     status: "approved"
@@ -27,23 +27,23 @@ const dummyVendors = [
     tags: ["tools", "hardware", "construction"],
     location: {
       type: "Point",
-      coordinates: [77.2180, 28.6320]
+      coordinates: [77.5950, 12.9720]
     },
-    address: "Janpath, New Delhi",
+    address: "Brigade Road, Bangalore",
     phone: "+91-9876543211",
     source: "admin",
     status: "approved"
   },
   {
-    name: "Delhi Street Food",
+    name: "Bangalore Street Food",
     category: "Food",
-    description: "Authentic Delhi street food - chaat, golgappa, tikki",
-    tags: ["street food", "chaat", "snacks"],
+    description: "Authentic South Indian street food - dosa, vada, idli",
+    tags: ["street food", "south indian", "snacks"],
     location: {
       type: "Point",
-      coordinates: [77.2150, 28.6310]
+      coordinates: [77.5940, 12.9710]
     },
-    address: "Palika Bazaar, New Delhi",
+    address: "Commercial Street, Bangalore",
     phone: "+91-9876543212",
     source: "admin",
     status: "approved"
@@ -55,25 +55,25 @@ const dummyVendors = [
     tags: ["repair", "mobile", "laptop"],
     location: {
       type: "Point",
-      coordinates: [77.2190, 28.6325]
+      coordinates: [77.5955, 12.9725]
     },
-    address: "Barakhamba Road, New Delhi",
+    address: "Residency Road, Bangalore",
     phone: "+91-9876543213",
     source: "admin",
     status: "approved"
   },
   
-  // Karol Bagh area
+  // Koramangala area
   {
-    name: "Karol Bagh Grocery",
+    name: "Koramangala Grocery",
     category: "Grocery",
     description: "Daily essentials and groceries",
     tags: ["grocery", "daily needs", "vegetables"],
     location: {
       type: "Point",
-      coordinates: [77.1900, 28.6519]
+      coordinates: [77.6245, 12.9352]
     },
-    address: "Karol Bagh, New Delhi",
+    address: "Koramangala, Bangalore",
     phone: "+91-9876543214",
     source: "admin",
     status: "approved"
@@ -85,39 +85,39 @@ const dummyVendors = [
     tags: ["electronics", "electrical", "appliances"],
     location: {
       type: "Point",
-      coordinates: [77.1910, 28.6525]
+      coordinates: [77.6250, 12.9355]
     },
-    address: "Ajmal Khan Road, Karol Bagh",
+    address: "5th Block, Koramangala",
     phone: "+91-9876543215",
     source: "admin",
     status: "approved"
   },
   {
-    name: "Punjabi Dhaba",
+    name: "Coastal Dhaba",
     category: "Food",
-    description: "Authentic Punjabi food and thalis",
-    tags: ["punjabi", "dhaba", "thali"],
+    description: "Authentic Coastal Karnataka food and thalis",
+    tags: ["coastal", "dhaba", "thali"],
     location: {
       type: "Point",
-      coordinates: [77.1920, 28.6515]
+      coordinates: [77.6240, 12.9350]
     },
-    address: "Pusa Road, Karol Bagh",
+    address: "6th Block, Koramangala",
     phone: "+91-9876543216",
     source: "admin",
     status: "approved"
   },
   
-  // Lajpat Nagar area
+  // Indiranagar area
   {
-    name: "Lajpat Market Vegetables",
+    name: "Indiranagar Market Vegetables",
     category: "Grocery",
     description: "Fresh vegetables and fruits market",
     tags: ["vegetables", "fruits", "market"],
     location: {
       type: "Point",
-      coordinates: [77.2430, 28.5677]
+      coordinates: [77.6408, 12.9784]
     },
-    address: "Lajpat Nagar, New Delhi",
+    address: "Indiranagar, Bangalore",
     phone: "+91-9876543217",
     source: "admin",
     status: "approved"
@@ -129,9 +129,9 @@ const dummyVendors = [
     tags: ["hardware", "tools", "modern"],
     location: {
       type: "Point",
-      coordinates: [77.2440, 28.5685]
+      coordinates: [77.6415, 12.9790]
     },
-    address: "Lajpat Nagar 2, New Delhi",
+    address: "100 Feet Road, Indiranagar",
     phone: "+91-9876543218",
     source: "admin",
     status: "approved"
@@ -143,15 +143,15 @@ const dummyVendors = [
     tags: ["south indian", "dosa", "idli"],
     location: {
       type: "Point",
-      coordinates: [77.2420, 28.5670]
+      coordinates: [77.6400, 12.9780]
     },
-    address: "Lajpat Nagar 4, New Delhi",
+    address: "CMH Road, Indiranagar",
     phone: "+91-9876543219",
     source: "admin",
     status: "approved"
   },
   
-  // Nehru Place area
+  // Whitefield area
   {
     name: "Tech Repair Hub",
     category: "Service",
@@ -159,9 +159,9 @@ const dummyVendors = [
     tags: ["repair", "computer", "mobile", "tech"],
     location: {
       type: "Point",
-      coordinates: [77.2500, 28.5494]
+      coordinates: [77.7499, 12.9698]
     },
-    address: "Nehru Place, New Delhi",
+    address: "Whitefield, Bangalore",
     phone: "+91-9876543220",
     source: "admin",
     status: "approved"
@@ -173,9 +173,9 @@ const dummyVendors = [
     tags: ["stationery", "office", "supplies"],
     location: {
       type: "Point",
-      coordinates: [77.2510, 28.5500]
+      coordinates: [77.7505, 12.9700]
     },
-    address: "Nehru Place Market, New Delhi",
+    address: "ITPL Road, Whitefield",
     phone: "+91-9876543221",
     source: "admin",
     status: "approved"
@@ -189,9 +189,9 @@ const dummyVendors = [
     tags: ["bakery", "bread", "pastries"],
     location: {
       type: "Point",
-      coordinates: [77.2200, 28.6300]
+      coordinates: [77.5950, 12.9715]
     },
-    address: "Near CP, New Delhi",
+    address: "Near MG Road, Bangalore",
     phone: "+91-9876543222",
     source: "user",
     status: "pending"
@@ -203,9 +203,9 @@ const dummyVendors = [
     tags: ["flowers", "bouquet", "gifts"],
     location: {
       type: "Point",
-      coordinates: [77.2160, 28.6305]
+      coordinates: [77.5945, 12.9712]
     },
-    address: "Connaught Place, New Delhi",
+    address: "MG Road, Bangalore",
     phone: "+91-9876543223",
     source: "user",
     status: "pending"
@@ -217,9 +217,9 @@ const dummyVendors = [
     tags: ["tailor", "stitching", "alterations"],
     location: {
       type: "Point",
-      coordinates: [77.1930, 28.6520]
+      coordinates: [77.6255, 12.9358]
     },
-    address: "Karol Bagh, New Delhi",
+    address: "Koramangala, Bangalore",
     phone: "+91-9876543224",
     source: "user",
     status: "pending"
@@ -229,11 +229,13 @@ const dummyVendors = [
 async function seedDatabase() {
   try {
     console.log('🔌 Connecting to MongoDB...');
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/nearby', {
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/nearby';
+    console.log('📡 MongoDB URI:', mongoUri.replace(/\/\/.*@/, '//***:***@')); // Hide credentials
+    await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('✅ MongoDB connected');
+    console.log('✅ MongoDB connected to database:', mongoose.connection.db.databaseName);
 
     // Clear existing vendors
     console.log('🗑️  Clearing existing vendors...');

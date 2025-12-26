@@ -15,6 +15,7 @@ interface VendorListProps {
 export function VendorList({ vendors }: VendorListProps) {
   const router = useRouter();
 
+
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
     const hours = date.getHours().toString().padStart(2, '0');
@@ -87,6 +88,8 @@ export function VendorList({ vendors }: VendorListProps) {
       renderItem={renderVendor}
       keyExtractor={(item) => item._id}
       contentContainerStyle={{ paddingVertical: 10 }}
+      style={{ flex: 1 }}
+      showsVerticalScrollIndicator={true}
     />
   );
 }

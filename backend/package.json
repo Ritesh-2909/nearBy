@@ -8,6 +8,8 @@
     "dev": "nodemon server.js",
     "create-admin": "node scripts/createAdmin.js",
     "init-db": "node scripts/initDatabase.js",
+    "seed": "node scripts/seedDatabase.js",
+    "check-vendors": "node scripts/checkVendors.js",
     "check": "node scripts/check.js",
     "prebuild": "npm run check",
     "build": "npm run prebuild && echo '✓ Backend checks passed! Ready to deploy.'"

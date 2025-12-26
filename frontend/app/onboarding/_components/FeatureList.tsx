@@ -19,14 +19,14 @@ export function FeatureList() {
       {features.map((feature, index) => (
         <View 
           key={index} 
-          className="flex-row items-start mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100"
+          className="flex-row items-start mb-6 bg-gray-800/50 p-4 rounded-xl border border-gray-700"
         >
-          <View className="w-12 h-12 bg-white rounded-full items-center justify-center mr-4 shadow-sm">
+          <View className="w-12 h-12 bg-gray-700 rounded-full items-center justify-center mr-4 shadow-sm">
             <Text className="text-2xl">{feature.icon}</Text>
           </View>
           <View className="flex-1">
-            <Text className="text-base font-semibold text-gray-900 mb-1">{feature.text}</Text>
-            <Text className="text-sm text-gray-600 leading-5">{feature.description}</Text>
+            <Text className="text-base font-semibold text-white mb-1">{feature.text}</Text>
+            <Text className="text-sm text-gray-300 leading-5">{feature.description}</Text>
           </View>
         </View>
       ))}

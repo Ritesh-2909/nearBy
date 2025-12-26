@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { ScrollView, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import * as Location from 'expo-location';
-import { AddVendorHeader } from './components/AddVendorHeader';
-import { VendorForm } from './components/VendorForm';
-import { SubmitButton } from './components/SubmitButton';
+import { AddVendorHeader } from './_components/AddVendorHeader';
+import { VendorForm } from './_components/VendorForm';
+import { SubmitButton } from './_components/SubmitButton';
 import { submitVendor } from './utils';
 import { VendorFormData } from './types';
 

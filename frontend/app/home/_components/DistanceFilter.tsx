@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-const DISTANCES = ['1 km', '2 km', '5 km'];
+const DISTANCES = ['1 km', '2 km', '5 km', '10 km', 'All']; // All fetches all vendors
 
 interface DistanceFilterProps {
   selectedDistance: string | null;
@@ -18,8 +18,8 @@ export function DistanceFilter({ selectedDistance, onDistanceSelect }: DistanceF
             onPress={() => onDistanceSelect(selectedDistance === distance ? null : distance)}
           >
             <Text
-              className={`text-sm ${
-                selectedDistance === distance ? 'text-gray-900 font-semibold' : 'text-gray-500'
+              className={`text-sm px-2 py-1 rounded-full ${
+                selectedDistance === distance ? 'text-gray-900 font-semibold bg-orange-100' : 'text-gray-500'
               }`}
             >
               {distance}

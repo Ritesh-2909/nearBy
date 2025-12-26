@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { SubmissionsHeader } from './components/SubmissionsHeader';
-import { SubmissionCard } from './components/SubmissionCard';
+import { SubmissionsHeader } from './_components/SubmissionsHeader';
+import { SubmissionCard } from './_components/SubmissionCard';
 import { fetchUserSubmissions, sortSubmissionsByDate } from './utils';
 import { adminAPI } from '../../services/api';
 import { Submission } from './types';

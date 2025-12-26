@@ -10,9 +10,9 @@ interface AuthLinkProps {
 export function AuthLink({ text, linkText, onPress }: AuthLinkProps) {
   return (
     <TouchableOpacity className="mt-6 items-center" onPress={onPress}>
-      <Text className="text-gray-600 text-base">
+      <Text className="text-gray-300 text-base">
         {text}{' '}
-        <Text className="text-primary font-bold">{linkText}</Text>
+        <Text className="text-blue-400 font-bold">{linkText}</Text>
       </Text>
     </TouchableOpacity>
   );

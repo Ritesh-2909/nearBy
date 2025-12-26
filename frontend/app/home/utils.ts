@@ -18,14 +18,49 @@ export async function fetchNearbyVendors(
     const response = await vendorsAPI.getNearby(
       latitude,
       longitude,
-      filters.radius || 3000,
+      filters.radius || 50000, // Default 50km radius
       filters.category || null,
       filters.searchQuery || null
     );
     
-    return response.data.vendors || [];
-  } catch (error) {
-    console.error('Error fetching nearby vendors:', error);
+    const vendors = response.data?.vendors || [];
+    return Array.isArray(vendors) ? vendors : [];
+  } catch (error: any) {
+    console.error('❌ [fetchNearbyVendors] Error fetching nearby vendors:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+      code: error.code,
+    });
+    throw error;
+  }
+}
+
+/**
+ * Fetch all vendors from API (sorted by distance, closest first)
+ */
+export async function fetchAllVendors(
+  latitude: number,
+  longitude: number,
+  filters: VendorFilters
+): Promise<Vendor[]> {
+  try {
+    const response = await vendorsAPI.getAll(
+      latitude,
+      longitude,
+      filters.category || null,
+      filters.searchQuery || null
+    );
+    
+    const vendors = response.data?.vendors || [];
+    return Array.isArray(vendors) ? vendors : [];
+  } catch (error: any) {
+    console.error('❌ [fetchAllVendors] Error fetching all vendors:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+      code: error.code,
+    });
     throw error;
   }
 }
@@ -38,14 +73,14 @@ export function filterVendors(
   filters: VendorFilters
 ): Vendor[] {
   return vendors.filter((vendor) => {
-    const matchesSearch = !filters.searchQuery || 
+    const matchesSearch = !filters.searchQuery || filters.searchQuery.trim() === '' ||
       vendor.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
       vendor.description?.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
       vendor.tags?.some(tag => 
         tag.toLowerCase().includes(filters.searchQuery.toLowerCase())
       );
     
-    const matchesCategory = !filters.category || vendor.category === filters.category;
+    const matchesCategory = !filters.category || filters.category === '' || vendor.category === filters.category;
     
     return matchesSearch && matchesCategory;
   });

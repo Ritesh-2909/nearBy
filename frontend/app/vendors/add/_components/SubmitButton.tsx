@@ -1,5 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, Text, ActivityIndicator, View } from 'react-native';
+import { View, Text } from 'react-native';
+import { Button } from '../../../../src/components/ui';
 
 interface SubmitButtonProps {
   onPress: () => void;
@@ -9,17 +10,17 @@ interface SubmitButtonProps {
 export function SubmitButton({ onPress, loading }: SubmitButtonProps) {
   return (
     <View className="px-4 pb-4">
-      <TouchableOpacity
-        className={`bg-black p-4 rounded-lg items-center ${loading ? 'opacity-60' : ''}`}
+      <Button
         onPress={onPress}
+        loading={loading}
         disabled={loading}
+        variant="primary"
+        size="lg"
+        fullWidth
+        className="bg-gray-900 dark:bg-black"
       >
-        {loading ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text className="text-white text-lg font-semibold">Submit for review</Text>
-        )}
-      </TouchableOpacity>
+        Submit for review
+      </Button>
       <Text className="text-xs text-gray-500 text-center mt-2">
         Will be visible after approval
       </Text>

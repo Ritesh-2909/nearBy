@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/nearby', [
   query('lat').isFloat({ min: -90, max: 90 }),
   query('lng').isFloat({ min: -180, max: 180 }),
-  query('radius').optional().isInt({ min: 1, max: 10000 })
+  query('radius').optional().isInt({ min: 1, max: 200000 }) // Max 200km
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -19,8 +19,12 @@ router.get('/nearby', [
 
     const { lat, lng, radius = 3000 } = req.query; // Default 3km radius
     const { category, search } = req.query;
+    // Handle "All" option - use very large radius (200,000km effectively fetches all vendors)
+    const searchRadius = parseInt(radius) > 100000000 ? 200000000 : parseInt(radius);
 
-    // Build query - only approved vendors
+    console.log('🔍 [vendors/nearby] Request received:', { lat, lng, radius, category, search });
+
+    // Build base query - only approved vendors
     let query = {
       status: 'approved',
       location: {
@@ -29,7 +33,7 @@ router.get('/nearby', [
             type: 'Point',
             coordinates: [parseFloat(lng), parseFloat(lat)]
           },
-          $maxDistance: parseInt(radius)
+          $maxDistance: searchRadius
         }
       }
     };
@@ -39,15 +43,32 @@ router.get('/nearby', [
       query.category = category;
     }
 
-    // Text search
-    if (search) {
-      query.$text = { $search: search };
-    }
+    console.log('🔍 [vendors/nearby] Base query:', JSON.stringify(query, null, 2));
 
-    const vendors = await Vendor.find(query)
-      .limit(50)
+    // First, get vendors using geospatial query (required for $near)
+    let vendors = await Vendor.find(query)
+      .limit(100) // Get more initially if we need to filter by search
       .select('-moderatedBy -rejectionReason')
       .lean();
+
+    console.log(`✅ [vendors/nearby] Found ${vendors.length} vendors from geospatial query`);
+
+    // Then filter by text search if provided (client-side filtering to avoid MongoDB conflict)
+    if (search) {
+      const searchLower = search.toLowerCase();
+      vendors = vendors.filter(vendor => {
+        const nameMatch = vendor.name?.toLowerCase().includes(searchLower);
+        const descMatch = vendor.description?.toLowerCase().includes(searchLower);
+        const tagsMatch = vendor.tags?.some(tag => tag.toLowerCase().includes(searchLower));
+        return nameMatch || descMatch || tagsMatch;
+      });
+      console.log(`✅ [vendors/nearby] Filtered to ${vendors.length} vendors after text search`);
+    }
+
+    // Limit final results
+    vendors = vendors.slice(0, 50);
+
+    console.log(`✅ [vendors/nearby] Found ${vendors.length} vendors`);
 
     // Calculate distance for each vendor
     const vendorsWithDistance = vendors.map(vendor => {

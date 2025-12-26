@@ -24,11 +24,11 @@ export function ActionButtons({ onGetStarted, onLogin, loading }: ActionButtonsP
       </TouchableOpacity>
 
       <TouchableOpacity
-        className="bg-white border-2 border-blue-500 p-4 rounded-xl items-center shadow-sm"
+        className="bg-transparent border-2 border-blue-400 p-4 rounded-xl items-center shadow-sm"
         onPress={onLogin}
         disabled={loading}
       >
-        <Text className="text-blue-500 text-lg font-semibold">Already have an account? Login</Text>
+        <Text className="text-blue-400 text-lg font-semibold">Already have an account? Login</Text>
       </TouchableOpacity>
     </View>
   );
